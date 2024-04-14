@@ -1,4 +1,4 @@
-import { Alert, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Alert, SimpleGrid, Text } from "@chakra-ui/react";
 import { GameQuery } from "../App";
 import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";

@@ -6,17 +6,14 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   CircularProgress,
   CircularProgressLabel,
-  Flex,
   Image,
-  Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 interface Props {
@@ -28,6 +25,8 @@ interface Props {
 }
 
 const GameCardRatings = ({ ratings }: Props) => {
+  const isMobile = useBreakpointValue({ base: true, lg: false });
+
   const ratingHeading = (ratingTitle: string) => {
     let icon = "";
     let title = "";
@@ -75,7 +74,7 @@ const GameCardRatings = ({ ratings }: Props) => {
           <Thead>
             <Tr>
               <Th>Rating</Th>
-              <Th></Th>
+              <Th display={{ base: "none", lg: "table-cell" }}></Th>
               <Th isNumeric>Count</Th>
               <Th>Percent</Th>
             </Tr>
@@ -86,7 +85,7 @@ const GameCardRatings = ({ ratings }: Props) => {
               return (
                 <Tr key={rating.title}>
                   <Td>{name}</Td>
-                  <Td>
+                  <Td display={{ base: "none", lg: "table-cell" }}>
                     <Image boxSize="20px" src={icon} />
                   </Td>
                   <Td isNumeric>{rating.count}</Td>

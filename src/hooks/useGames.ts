@@ -7,6 +7,17 @@ export interface Platform {
   name: string;
   slug: string;
 }
+export interface Rating {
+  count: number;
+  id: number;
+  percent: number;
+  title: string;
+}
+export interface Store {
+    name: string;
+    domain: string;
+    image_background: string;
+}
 
 export interface Game {
   id: number;
@@ -15,6 +26,24 @@ export interface Game {
   parent_platforms: { platform: Platform }[];
   metacritic: number;
   rating_top: number;
+  released: string;
+  genres: Array<{
+    name: string;
+  }>;
+  ratings: Array<{
+    title: string;
+    count: number;
+    percent: number;
+  }>;
+  stores: Array<{
+    store: {
+      name: string;
+      domain: string;
+    };
+  }>;
+  tags: Array<{
+    name: string;
+  }>;
 }
 
 const useGames = (gameQuery: GameQuery) =>

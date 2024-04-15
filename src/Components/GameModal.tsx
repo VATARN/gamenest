@@ -7,7 +7,6 @@ import {
   Heading,
   List,
   ListItem,
-  Code,
   Divider,
   Flex,
   Text,
@@ -30,15 +29,20 @@ interface GameModalProps {
 const GameModal = ({ game, isOpen, onClose }: GameModalProps) => {
   const genreNames = game.genres.map((genre) => genre.name).join(", ");
 
-  const storeLinks = game.stores.map((store, index) => (
-    <ListItem key={index}>
+  const storeLinks = game.stores.map((store, index) => {
+    const storeContent = store.store.domain ? (
       <Link href={`https://${store.store.domain}`} isExternal>
         <Flex justifyContent="space-between">
-          <Text marginRight={2}> {store.store.name} </Text> <BiLinkExternal />{" "}
+          <Text>{store.store.name}</Text>
+          <BiLinkExternal />
         </Flex>
       </Link>
-    </ListItem>
-  ));
+    ) : (
+      <Text>{store.store.name}</Text>
+    );
+
+    return <ListItem key={index}>{storeContent}</ListItem>;
+  });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -47,61 +51,69 @@ const GameModal = ({ game, isOpen, onClose }: GameModalProps) => {
         <ModalHeader>
           <Flex justifyContent="space-between">
             <Heading>{game.name}</Heading>
-            <Icon boxSize="40px" onClick={onClose}>
-              <CgClose />
-            </Icon>
+            <Icon as={CgClose} boxSize="6" cursor="pointer" onClick={onClose} />
           </Flex>
         </ModalHeader>
         <ModalBody>
           <List>
-            <ListItem key="Platforms" paddingY="7px">
-              <Flex>
-                <Text marginRight={2}>Platforms:</Text>
-                <PlatformIconList
-                  platforms={game.parent_platforms?.map((p) => p.platform)}
-                />
-              </Flex>
-            </ListItem>
+            {game.parent_platforms?.length > 0 && (
+              <ListItem key="Platforms" paddingY="2">
+                <Flex>
+                  <Text marginRight={2}>Platforms:</Text>
+                  <PlatformIconList
+                    platforms={game.parent_platforms.map((p) => p.platform)}
+                  />
+                </Flex>
+              </ListItem>
+            )}
             <Divider />
-            <ListItem key="genres" paddingY="7px">
-              {genreNames && (
-                <div>
-                  Genres: <strong>{genreNames}</strong>
-                </div>
-              )}
-            </ListItem>
+            {genreNames && (
+              <ListItem key="genres" paddingY="2">
+                <Flex>
+                  <Text marginRight={2}>Genres:</Text>
+                  <Text fontWeight="bold">{genreNames}</Text>
+                </Flex>
+              </ListItem>
+            )}
             <Divider />
-            <ListItem key="released" paddingY="7px">
-              {game.released && (
-                <div>
-                  Released: <strong>{game.released}</strong>
-                </div>
-              )}
-            </ListItem>
+            {game.released && (
+              <ListItem key="released" paddingY="2">
+                <Flex>
+                  <Text marginRight={2}>Released:</Text>
+                  <Text fontWeight="bold">{game.released}</Text>
+                </Flex>
+              </ListItem>
+            )}
             <Divider />
-            <ListItem key="ratings" paddingY="7px">
-              <GameCardRatings ratings={game.ratings} />
-            </ListItem>
+            {game.ratings.length > 0 && (
+              <ListItem key="ratings" paddingY="2">
+                <GameCardRatings ratings={game.ratings} />
+              </ListItem>
+            )}
             <Divider />
-            <ListItem key="stores" paddingY="7px">
-              <Flex>
-                <Text marginRight={2}>Stores:</Text>
-                <List spacing={2}>{storeLinks}</List>
-              </Flex>
-            </ListItem>
+            {game.stores.length > 0 && (
+              <ListItem key="stores" paddingY="2">
+                <Flex>
+                  <Text marginRight={2}>Stores:</Text>
+                  <List spacing={2}>{storeLinks}</List>
+                </Flex>
+              </ListItem>
+            )}
             <Divider />
-            <ListItem key="tags" paddingY="7px">
-              <Flex>
-                <Text marginRight={2}>Tags:</Text>
-                <div>
-                  {game.tags.map((tag) => (
-                    <Tag key={tag.name} margin={1}>
-                      {tag.name}
-                    </Tag>
-                  ))}
-                </div>
-              </Flex>
-            </ListItem>
+            {game.tags.length > 0 && (
+              <ListItem key="tags" paddingY="2">
+                <Flex>
+                  <Text marginRight={2}>Tags:</Text>
+                  <div>
+                    {game.tags.map((tag) => (
+                      <Tag key={tag.name} margin={1}>
+                        {tag.name}
+                      </Tag>
+                    ))}
+                  </div>
+                </Flex>
+              </ListItem>
+            )}
           </List>
         </ModalBody>
       </ModalContent>

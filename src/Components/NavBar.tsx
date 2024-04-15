@@ -41,10 +41,12 @@ const NavBar = ({
   }, [selectedGenre]);
 
   const heading = (
-    <HStack>
-      <Image src={logo} boxSize="60px" />
-      <Heading size="sm">Game Nest</Heading>
-    </HStack>
+    <a href="/">
+      <HStack>
+        <Image src={logo} boxSize="60px" />
+        <Heading size="sm">Game Nest</Heading>
+      </HStack>
+    </a>
   );
 
   const drawer = (

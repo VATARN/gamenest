@@ -20,7 +20,15 @@ const GameCard = ({ game }: Props) => {
 
   return (
     <>
-      <Card overflow="hidden" onClick={gameCardClick}>
+      <Card
+        overflow="hidden"
+        onClick={gameCardClick}
+        cursor="pointer"
+        _hover={{
+          transform: "scale(1.05)",
+          transition: "all 0.2s ease-in-out",
+        }}
+      >
         <Image src={getCroppedImageUrl(game.background_image)} />
         <CardBody>
           <HStack
